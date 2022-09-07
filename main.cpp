@@ -15,10 +15,9 @@ for (int K = 1; K < MAX; K += STEP)
 uint64_t f(uint64_t numLo, uint64_t numHi, uint64_t denom, uint64_t *rem)
 {
     asm("");
-    unsigned __int128 dividend128 = (((unsigned __int128)numHi)<<64) | ((unsigned __int128) numLo);
-    unsigned __int128 divisor128 = (unsigned __int128)denom;
-    *rem = (uint64_t)((dividend128 % divisor128) & 0xFFFFFFFFFFFFFFFF);
-    return (uint64_t)((dividend128 / divisor128) & 0xFFFFFFFFFFFFFFFF);
+    unsigned __int128 num = (((unsigned __int128)numHi)<<64) | ((unsigned __int128) numLo);
+    *rem = (uint64_t)((num % denom) & 0xFFFFFFFFFFFFFFFF);
+    return (uint64_t)((num / denom) & 0xFFFFFFFFFFFFFFFF);
 }
 
 extern "C" uint64_t __attribute__((ms_abi)) h(uint64_t low, uint64_t hi, uint64_t divisor, uint64_t *remainder);
